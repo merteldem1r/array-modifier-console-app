@@ -1,0 +1,23 @@
+# Ignore build files and directories
+/build
+/bin
+/obj
+*.o
+*.a
+*.so
+*.out
+
+# Ignore compiled binary executables
+array_modifier_app
+
+# Ignore editor and IDE-specific files
+.vscode/
+.idea/
+*.swp
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore dependency manager files (if any)
+node_modules/
