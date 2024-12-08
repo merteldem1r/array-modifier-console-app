@@ -26,6 +26,13 @@ struct Array
 #define IS_SORTED 17
 #define EXIT 0
 
+// Colors
+#define C_RESET "\033[0m"
+#define C_SUCCESS "\033[32m"
+#define C_ERROR "\033[31m"
+#define C_DATA "\033[96m"
+#define C_OPTION "\033[95m"
+
 // METHODS
 
 // Core Operations
@@ -54,7 +61,10 @@ void RightShift(struct Array *arr);
 void Rotate(struct Array *arr, int k);
 
 // UTILS
-void swap(int *x, int *y);
+void PerformanceTest(void (*func)(), const char *funcName);
 void displayOptions();
+void printConsoleMessage(int isSuccess, const char *message);
+void swap(int *x, int *y);
+void fillRandomNumbers(int A[], int length);
 
 #endif

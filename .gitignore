@@ -19,5 +19,3 @@ array_modifier_app
 .DS_Store
 Thumbs.db
 
-# Ignore dependency manager files (if any)
-node_modules/

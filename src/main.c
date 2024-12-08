@@ -1,49 +1,66 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../include/array.h"
+#include <time.h>
 
 int main()
 {
     struct Array arr;
-    int elemCount;
+    int arrLength;
 
     // Initialize Array on HEAP
-    printf("Enter size of an array: ");
+    printf("Enter size on HEAP for an array: ");
     scanf("%d", &arr.size);
 
     if (arr.size <= 0)
     {
-        printf("\t\t** Error: Array size must be positive\n");
+        printConsoleMessage(0, "Array size must be positive");
         return 1;
     }
 
     arr.A = (int *)malloc(arr.size * sizeof(int));
     arr.length = 0;
 
-    printf("Enter number of elements: ");
-    scanf("%d", &elemCount);
+    printf("Enter length of an array: ");
+    scanf("%d", &arrLength);
 
-    if (elemCount > arr.size)
+    if (arrLength > arr.size)
     {
-        printf("\t\t** Error: Number of elements can not be greater than allocated array size\n");
+        printConsoleMessage(0, "Number of elements can not be greater than allocated array size");
         free(arr.A);
         return 1;
     }
 
-    printf("Enter all elements: \n");
-    for (int i = 0; i < elemCount; ++i)
+    int isRandom = 1;
+    printf("Do you want randomly filled array? 1: YES 0: NO -> ");
+    scanf("%d", &isRandom);
+
+    if (isRandom == 1)
     {
-        printf("\tElement %d: ", i + 1);
-        scanf("%d", &arr.A[i]);
+        fillRandomNumbers(arr.A, arrLength);
+    }
+    else if (isRandom == 0)
+    {
+        printf("Enter all elements: \n");
+        for (int i = 0; i < arrLength; ++i)
+        {
+            printf("\tElement %d: ", i + 1);
+            scanf("%d", &arr.A[i]);
+        }
+    }
+    else
+    {
+        printConsoleMessage(0, "Invalid input passed");
+        return -1;
     }
 
-    arr.length = elemCount;
+    arr.length = arrLength;
     Display(&arr);
 
     // Manipulatios on created Array from console
     while (1)
     {
-        printf("Choose Options on Array:  \n");
+        printf("\nChoose Options on %sArray%s:  \n", C_DATA, C_RESET);
         displayOptions();
 
         int option;
@@ -82,7 +99,8 @@ int main()
             printf("\t\tEnter delete index: ");
             scanf("%d", &index);
 
-            printf("-> Deleted value: %d\n", Delete(&arr, index));
+            printConsoleMessage(1, "Deleted value: ");
+            printf("%d\n", Delete(&arr, index));
             break;
         }
         case SEARCH:
@@ -90,7 +108,8 @@ int main()
             int key;
             printf("\t\tEnter num to search: ");
             scanf("%d", &key);
-            printf("-> Found num at index: %d\n", Search(&arr, key));
+            printConsoleMessage(1, "Found num at index: ");
+            printf("%d\n", Search(&arr, key));
             break;
         }
         case GET:
@@ -98,7 +117,8 @@ int main()
             int index;
             printf("\t\tEnter index to get: ");
             scanf("%d", &index);
-            printf("-> Found num: %d\n", Get(&arr, index));
+            printConsoleMessage(1, "Found num: ");
+            printf("%d\n", Get(&arr, index));
             break;
         }
         case SET:
@@ -109,47 +129,52 @@ int main()
 
             printf("\t\tEnter number to set: ");
             scanf("%d", &num);
-            printf("-> Setted num: %d\n at index: %d\n", Set(&arr, index, num), index);
+            printConsoleMessage(1, "Number setted at index:");
+            printf("Num: %d\n Index: %d\n", Set(&arr, index, num), index);
             break;
         }
         case MAX:
         {
-            printf("-> Max found number: %d\n", Max(&arr));
+            printConsoleMessage(1, "Max found number:");
+            printf("%d\n", Max(&arr));
             break;
         }
         case MIN:
         {
-            printf("-> Min found number: %d\n", Min(&arr));
+            printConsoleMessage(1, "Min found number:");
+            printf("%d\n", Min(&arr));
             break;
         }
         case SUM:
         {
-            printf("-> Sum of all elements: %d\n", Sum(&arr));
+            printConsoleMessage(1, "Sum of all elements:");
+            printf("%d\n", Sum(&arr));
             break;
         }
         case AVG:
         {
-            printf("-> Average of all elements: %.2f\n", Avg(&arr));
+            printConsoleMessage(1, "Average of all elements:");
+            printf("%.2f\n", Avg(&arr));
             break;
         }
         case REVERSE:
         {
             Reverse(&arr);
-            printf("-> Elements reversed: ");
+            printConsoleMessage(1, "Elements reversed");
             Display(&arr);
             break;
         }
         case LEFT_SHIFT:
         {
             LeftShift(&arr);
-            printf("-> Elements left shifted: ");
+            printConsoleMessage(1, "Elements left shifted");
             Display(&arr);
             break;
         }
         case RIGHT_SHIFT:
         {
             RightShift(&arr);
-            printf("-> Elements right shifted: ");
+            printConsoleMessage(1, "Elements right shifted");
             Display(&arr);
             break;
         }
@@ -159,7 +184,7 @@ int main()
             printf("\tEnter non-negative Rotate step: ");
             scanf("%d", &k);
             Rotate(&arr, k);
-            printf("-> Elements right roted for %d steps: ", k);
+            printConsoleMessage(1, "Elements right rotated");
             Display(&arr);
             break;
         }
@@ -167,10 +192,9 @@ int main()
         {
 
             if (IsSorted(&arr))
-                printf("-> Array is Sorted in non-descending order!\n");
+                printConsoleMessage(1, "Array is Sorted in non-descending order");
             else
-                printf("-> Array is NOT Sorted in non-descending order!\n");
-
+                printConsoleMessage(1, "Array is NOT Sorted in non-descending order");
             break;
         }
 

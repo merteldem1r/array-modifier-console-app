@@ -20,10 +20,25 @@ void Resize(struct Array *arr)
 
 void Display(struct Array *arr) // Time: O(n)
 {
-    printf("Array: [ ");
-    for (int i = 0; i < arr->length; ++i)
-        printf("%d ", arr->A[i]);
-    printf("]\n");
+    const char *COLOR = C_DATA;
+    printf("%sArray:%s [ ", COLOR, C_RESET);
+
+    if (arr->length > 10)
+    {
+        for (int i = 0; i < 5; ++i)
+            printf("%d ", arr->A[i]);
+
+        printf("... ");
+
+        for (int i = arr->length - 5; i < arr->length; ++i)
+            printf("%d ", arr->A[i]);
+    }
+    else
+    {
+        for (int i = 0; i < arr->length; ++i)
+            printf("%d ", arr->A[i]);
+    }
+    printf("] %sLength:%s %d\n", COLOR, C_RESET, arr->length);
 }
 
 void Append(struct Array *arr, int num) // Time: O(1)
